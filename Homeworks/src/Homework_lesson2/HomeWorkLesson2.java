@@ -1,11 +1,6 @@
 package Homework_lesson2;
 
 public class HomeWorkLesson2 {
-    static class Model {
-        public String name;
-        public String val;
-    }
-
     public static void main(String[] args) {
         double task1Result = getTask1Example(2, 4);
         int task2Result = getTwoDigitSum(26);
