@@ -15,7 +15,7 @@ public class Atm {
     }
 
     public void addMoney(MoneyPackage moneyPackage) {
-        MoneyPackage existingPackage = getPackageByNominal(moneyPackage.nominal);
+        MoneyPackage existingPackage = getPackageByNominal(moneyPackage.nominal, this.moneyPackages);
 
         if (existingPackage == null) {
             extendMoneyPackages(moneyPackage);
@@ -24,37 +24,62 @@ public class Atm {
         existingPackage.count += moneyPackage.count;
     }
 
-    public boolean extractMoney(int money) {
+    private MoneyPackage[] deepCopyOf(MoneyPackage[] source) {
+        MoneyPackage[] copy = new MoneyPackage[source.length];
+        for (int i = 0; i < source.length; i++) {
+            copy[i] = new MoneyPackage(source[i].count, source[i].nominal);
+        }
+        return copy;
+    }
 
-        if (!canExtract(money)) {
+    public boolean extractMoney(int money) {
+        MoneyPackage[] moneyPackagesTemp = this.deepCopyOf(this.moneyPackages);
+
+        if (!canExtract(money, moneyPackagesTemp)) {
             this.logger.error("Enter a multiple of the available amount nominal value: " + this.getAvailableNominals());
             return false;
         }
 
-        MoneyPackage[] moneyPackagesTemp = Arrays.copyOf(this.moneyPackages, this.moneyPackages.length);
         Arrays.sort(moneyPackagesTemp, new MoneyPackageComparator());
 
         while (money > 0) {
-            if (!canExtract(money)) {
+            if (!canExtract(money, moneyPackagesTemp)) {
                 this.logger.error("There are not enough money nominal's count  to extract");
                 return false;
             }
-            for (MoneyPackage moneyPackage : this.moneyPackages) {
-                if (moneyPackage.count != ZERO && money - moneyPackage.nominal > ZERO) {
+            for (MoneyPackage moneyPackage : moneyPackagesTemp) {
+                if (moneyPackage.count != ZERO && money - moneyPackage.nominal >= ZERO) {
                     money = money - moneyPackage.nominal;
                     moneyPackage.count--;
+                    break;
                 }
             }
         }
 
-
+        this.logger.info(getPackagesDifferent(this.moneyPackages, moneyPackagesTemp));
+        this.moneyPackages = moneyPackagesTemp;
         return true;
     }
 
-    private String getAvailableNominals() {
+    private String getPackagesDifferent(MoneyPackage[] previous, MoneyPackage[] next) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int i = 0; i < next.length; i++) {
+            MoneyPackage previousPackage = getPackageByNominal(next[i].nominal, previous);
+            if (previousPackage == null || previousPackage.count - next[i].count == 0)
+                continue;
+
+            builder.append(String.format("Nominal: %d count: %d\n", next[i].nominal, previousPackage.count - next[i].count));
+
+        }
+        return builder.toString();
+    }
+
+     public String getAvailableNominals() {
         StringBuilder builder = new StringBuilder();
         for (MoneyPackage moneyPackage : this.moneyPackages) {
-            builder.append(String.format(" [%d] ", moneyPackage.nominal));
+            if (moneyPackage.count > ZERO)
+                builder.append(String.format(" [%d] ", moneyPackage.nominal));
         }
         return builder.toString();
     }
@@ -67,9 +92,9 @@ public class Atm {
         return false;
     }
 
-    private MoneyPackage getPackageByNominal(int nominal) {
+    private MoneyPackage getPackageByNominal(int nominal, MoneyPackage[] packages) {
 
-        for (MoneyPackage moneyPackage : this.moneyPackages) {
+        for (MoneyPackage moneyPackage : packages) {
             if (moneyPackage.nominal == nominal) {
                 return moneyPackage;
             }
@@ -85,4 +110,6 @@ public class Atm {
         }
         this.moneyPackages = result;
     }
+
+
 }
