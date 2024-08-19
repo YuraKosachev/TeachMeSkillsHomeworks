@@ -26,7 +26,7 @@ public class GallowGame {
         while(true){
             start(scanner, isEng);
 
-            String answer = input("Enter \"e\" to exit.. :",BLUE, scanner);
+            String answer = input("Enter \"e\" to exit or other to continue.. :",BLUE, scanner);
 
             if(Character.toLowerCase(answer.charAt(0)) == 'e' || Character.toLowerCase(answer.charAt(0)) == 'е')
                 break;
@@ -145,6 +145,9 @@ public class GallowGame {
 
     private static void drawGameResult(boolean isWinner, String player, String word) {
         //clearConsole();
+        if(!isWinner){
+            drawScence(8);
+        }
         String phrase = isWinner
                 ? GREEN + "Congratulations! " + player + " won game"
                 : RED + player + " lose";
