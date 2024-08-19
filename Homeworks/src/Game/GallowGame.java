@@ -20,23 +20,50 @@ public class GallowGame {
 
     private static final int ATTEPMPTS = 8;
 
+    private static String[] lang = {"eng", "rus"};
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        final boolean isEng = false;
-        while(true){
-            start(scanner, isEng);
+        while (true) {
+            start(scanner);
 
-            String answer = input("Enter \"e\" to exit or other to continue.. :",BLUE, scanner);
+            String answer = input("Enter \"e\" to exit or other to continue.. :", BLUE, scanner);
 
-            if(Character.toLowerCase(answer.charAt(0)) == 'e' || Character.toLowerCase(answer.charAt(0)) == 'е')
+            if (Character.toLowerCase(answer.charAt(0)) == 'e' || Character.toLowerCase(answer.charAt(0)) == 'е')
                 break;
         }
 
     }
 
-    public static void start(Scanner scanner, boolean isEng) {
+    private static boolean chooseEng(Scanner scanner) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Choose your language:\n");
+        for (int i = 0; i < lang.length; i++) {
+            builder.append("[" + i + "] - " + lang[i] + "\n");
+        }
+        builder.append("Your choice:");
+
+        while (true) {
+            print(builder.toString(), BLUE, false);
+            if (!scanner.hasNextInt()) {
+                print("Please enter number", RED, true);
+                continue;
+            }
+
+            try {
+                int index = scanner.nextInt();
+                return lang[index].equals("eng");
+
+            } catch (Exception ex) {
+                print("Error : enter correct value", RED, true);
+            }
+        }
+    }
+
+    public static void start(Scanner scanner) {
         String name = input("Enter your name: ", PURPLE, scanner);
-        String word = getWord();
+        boolean isEng = chooseEng(scanner);
+        String word = getWord(isEng);
 
         if (word == null || word.isEmpty()) {
             print("Error: The game dictionary is not filled", RED, true);
@@ -51,7 +78,7 @@ public class GallowGame {
         for (int attempt = 0; attempt < ATTEPMPTS; ) {
             drawGameProcess(scanner, name, attempt, word, selectedLetter, isEng);
 
-            String choose = guessWord("Enter all word or letter: ", scanner, selectedLetter, false);
+            String choose = guessWord("Enter all word or letter: ", scanner, selectedLetter, isEng);
 
             if (choose.length() > 1) {
                 //user entered the entire word
@@ -61,8 +88,7 @@ public class GallowGame {
             char letter = choose.charAt(0);
             selectedLetter = extendArray(selectedLetter, letter);
 
-            if(isAllLetterCover(word, selectedLetter))
-            {
+            if (isAllLetterCover(word, selectedLetter)) {
                 isGameWon = true;
                 break;
             }
@@ -76,9 +102,9 @@ public class GallowGame {
 
     }
 
-    private static boolean isAllLetterCover(String word, char[] selectedLetter){
-        for(char letter : word.toCharArray()){
-            if(!contain(selectedLetter, letter))
+    private static boolean isAllLetterCover(String word, char[] selectedLetter) {
+        for (char letter : word.toCharArray()) {
+            if (!contain(selectedLetter, letter))
                 return false;
         }
         return true;
@@ -104,8 +130,8 @@ public class GallowGame {
                     ? containAllCyrillic(choose.toCharArray())
                     : !containAllCyrillic(choose.toCharArray());
 
-            if(checkLang){
-                print("Error: Enter a "+(isEng? "Latin": "Cyrillic")+" word or letter", RED, true);
+            if (checkLang) {
+                print("Error: Enter a " + (isEng ? "Latin" : "Cyrillic") + " word or letter", RED, true);
                 continue;
             }
             if (choose.length() == 1 && contain(choosenLetter, choose.charAt(0))) {
@@ -117,9 +143,9 @@ public class GallowGame {
         }
     }
 
-    private static boolean containAllCyrillic(char[] source){
-        for(int i =0 ; i< source.length; i++){
-            if(!(Character.UnicodeBlock.of(source[i]).equals(Character.UnicodeBlock.CYRILLIC))) {
+    private static boolean containAllCyrillic(char[] source) {
+        for (int i = 0; i < source.length; i++) {
+            if (!(Character.UnicodeBlock.of(source[i]).equals(Character.UnicodeBlock.CYRILLIC))) {
                 return false;
             }
         }
@@ -145,7 +171,7 @@ public class GallowGame {
 
     private static void drawGameResult(boolean isWinner, String player, String word) {
         //clearConsole();
-        if(!isWinner){
+        if (!isWinner) {
             drawScence(8);
         }
         String phrase = isWinner
@@ -339,8 +365,8 @@ public class GallowGame {
         return builder.toString();
     }
 
-    private static String getWord() {
-        String[] words = {
+    private static String getWord(boolean isEng) {
+        String[] ruWords = {
                 "Барановичи",
                 "Берёза",
                 "Брест",
@@ -447,9 +473,197 @@ public class GallowGame {
                 "Чериков",
                 "Шклов",
         };
-        Random random = new Random();
 
-        return words[random.nextInt(0, words.length - 1)];
+        String[] engWords = {
+                "London",
+                "Birmingham",
+                "Leeds",
+                "Glasgow",
+                "Belfast",
+                "Sheffield",
+                "Manchester",
+                "Bradford",
+                "Edinburgh",
+                "Liverpool",
+                "Bristol",
+                "Wakefield",
+                "Cardiff",
+                "Coventry",
+                "Leicester",
+                "Nottingham",
+                "Sunderland",
+                "Belfast",
+                "Newcastle",
+                "Plymouth",
+                "Derby",
+                "Wolverhampton",
+                "Westminster",
+                "Southampton",
+                "Swansea",
+                "Salford",
+                "Portsmouth",
+                "Northampton",
+                "Dudley",
+                "York",
+                "Aberdeen",
+                "Milton",
+                "Luton",
+                "Peterborough",
+                "Walsall",
+                "Bournemouth",
+                "Telford",
+                "Ripon",
+                "Brighton",
+                "Swindon",
+                "Oxford",
+                "Canterbury",
+                "Huddersfield",
+                "Reading",
+                "Middlesbrough",
+                "Blackpool",
+                "Dundee",
+                "Newport",
+                "Bolton",
+                "Pool",
+                "Stockport",
+                "Ipswich",
+                "Norwich",
+                "Preston",
+                "Norwich",
+                "Gloucester",
+                "Exeter",
+                "Cambridge",
+                "Chester",
+                "Slough",
+                "Rotherham",
+                "Winchester",
+                "Blackburn",
+                "Colchester",
+                "Chesterfield",
+                "Oldham",
+                "Carlisle",
+                "Crawley",
+                "Durham",
+                "Worcester",
+                "Lincoln",
+                "Bath",
+                "Bangor",
+                "Lisburn",
+                "Newtownabbi",
+                "Craigavon",
+                "Inverness",
+                "Hereford",
+                "Edinburgh",
+                "Llanelli",
+                "Lancaster",
+                "Nit",
+                "Salisbury",
+                "Perth",
+                "Wrexham",
+                "Sterling",
+                "Port",
+                "Aberdare",
+                "Pontyprit",
+                "Ballimine",
+                "Newtownards",
+                "Newry",
+                "Carrickfergus",
+                "Coleraine",
+                "Chichester",
+                "Lurgan",
+                "Ohm",
+                "Portadown",
+                "Truro",
+                "Llandudno",
+                "Dundonald",
+                "Antrim",
+                "Larne",
+                "Strabban",
+                "Or",
+                "Banbridge",
+                "Armagh",
+                "Abergavenny",
+                "Conwy",
+                "Enniskillen",
+                "Bargoyd",
+                "Carmarthen",
+                "Aberystwyth",
+                "Limavadi",
+                "Holywood",
+                "Caldicott",
+                "Holyhead",
+                "Dungannon",
+                "Chepstow",
+                "Haverfordwest",
+                "Cookstown",
+                "Abergele",
+                "Wells",
+                "Downpatrick",
+                "Aberbrogoyd",
+                "Brecon",
+                "Paisley",
+                "East",
+                "Livingston",
+                "Aberavon",
+                "Cumbernauld",
+                "Dunfermline",
+                "Kirkcaldy",
+                "Abercarn",
+                "Ayr",
+                "Kilmarnock",
+                "Coatbridge",
+                "Greenock",
+                "Llangollen",
+                "Edri",
+                "Falkirk",
+                "Amlouh",
+                "Erwin",
+                "Dumfries",
+                "Motherwell",
+                "Rutherglen",
+                "Lichfield",
+                "Wishaw",
+                "Cabunes",
+                "Bersden",
+                "Clydebank",
+                "Barmouth",
+                "Arbroath",
+                "Musselborough",
+                "Bishopbriggs",
+                "Benlech",
+                "Ask",
+                "Elgin",
+                "Renfrew",
+                "Bathgate",
+                "Belshill",
+                "Bomaris",
+                "Alloa",
+                "Dumbarton",
+                "Kirkillilloch",
+                "Peterhead",
+                "Barrhead",
+                "Grencjmut",
+                "Blantyre",
+                "Kiluining",
+                "Johnston",
+                "Bonnirigg",
+                "Penik",
+                "View",
+                "Erskine",
+                "Broxburn",
+                "Aberrayron",
+                "Port",
+                "Larkhall",
+                "Queensferry",
+                "Llanvillin",
+                "Hamilton",
+                "Glenrothes",
+                "Saint"
+        };
+
+        Random random = new Random();
+        String[] wordDictionary = isEng ? engWords : ruWords;
+        return wordDictionary[random.nextInt(0, wordDictionary.length - 1)];
     }
 
     private static void drawWordPanel(String word, char[] letters) {
@@ -483,12 +697,12 @@ public class GallowGame {
                 counter = 0;
             }
 
-            if (!contain(selected, (char)i)) {
+            if (!contain(selected, (char) i)) {
                 builder.append(WHITE + "[ " + ((char) i) + " ] " + RESET);
                 continue;
             }
 
-            builder.append((contain(word, (char)i) ? GREEN : RED) + "[ " + ((char) i) + " ] " + RESET);
+            builder.append((contain(word, (char) i) ? GREEN : RED) + "[ " + ((char) i) + " ] " + RESET);
         }
         print(builder.toString(), null, true);
     }
