@@ -183,11 +183,11 @@ public class GallowGame {
     }
 
     private static void drawScence(int attempt) {
-        String scence = getScences(attempt);
+        String scence = getScence(attempt);
         print(scence, BLUE, true);
     }
 
-    private static String getScences(int attempt) {
+    private static String getScence(int attempt) {
         StringBuilder builder = new StringBuilder();
         switch (attempt) {
             case 0 -> builder
@@ -330,7 +330,7 @@ public class GallowGame {
                     .append("    *                  |    |\n")
                     .append("    *                  '****'\n")
                     .append("    *               * '*******' *\n")
-                    .append("    *              *  |       |  *\n")
+                    .append("    *              /  |       |  \\\n")
                     .append("    *             *   |       |   *\n")
                     .append("    *                 |       |\n")
                     .append("    *                 '*******'\n")
@@ -350,7 +350,7 @@ public class GallowGame {
                     .append("    *                  |    |\n")
                     .append("    *                  '****'\n")
                     .append("    *               * '*******' *\n")
-                    .append("    *              *  |       |  *\n")
+                    .append("    *              /  |       |  \\\n")
                     .append("    *             *   |       |   *\n")
                     .append("    *                 |       |\n")
                     .append("    *                 '*******'\n")
