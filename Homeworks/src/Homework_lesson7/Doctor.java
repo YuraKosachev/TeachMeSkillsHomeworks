@@ -3,14 +3,12 @@ package Homework_lesson7;
 import javax.print.Doc;
 
 public class Doctor extends Person {
-    protected Printer printer;
-    public Doctor(String name, Printer printer){
+    public Doctor(String name){
         super(name);
-        this.printer = printer;
     }
 
     public void treatmentProcess(Patient patient){
-        printer.action("Doctor treats");
+        Printer.action("Doctor treats");
     }
     protected final void preparingPatientToCheckOut(Patient patient){
         patient.setDoctor(null);

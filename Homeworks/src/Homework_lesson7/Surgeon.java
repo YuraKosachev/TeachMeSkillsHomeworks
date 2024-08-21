@@ -1,15 +1,15 @@
 package Homework_lesson7;
 
 public class Surgeon extends Doctor{
-    public Surgeon(String name, Printer printer){
-        super(name, printer);
+    public Surgeon(String name){
+        super(name);
     }
 
     @Override
     public void treatmentProcess(Patient patient) {
-        printer.action("Surgeon start treatment process");
+        Printer.action("Surgeon start treatment process");
         preparingPatientToCheckOut(patient);
-        printer.action("Surgeon end treatment process..");
-        printer.info(patient.getName() + " ready to check out!");
+        Printer.action("Surgeon end treatment process..");
+        Printer.info(patient.getName() + " ready to check out!");
     }
 }

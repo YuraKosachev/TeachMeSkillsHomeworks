@@ -1,6 +1,6 @@
 package Homework_lesson7;
 
-public class Printer {
+public final class Printer {
     private static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors
@@ -13,19 +13,19 @@ public class Printer {
     private static final String CYAN = "\033[0;36m";    // CYAN
     private static final String WHITE = "\033[0;37m";
 
-    public void info(String message) {
+    public static void info(String message) {
         print(message, BLUE, true);
     }
 
-    public void error(String message){
+    public static void error(String message){
         print(message, RED,true);
     }
 
-    public void action(String message){
+    public static void action(String message){
         print(message, YELLOW, true);
     }
 
-    private void print(String message, String color, boolean isNextLine) {
+    private static void print(String message, String color, boolean isNextLine) {
         System.out.print(color + message + RESET + (isNextLine ? "\n" : ""));
     }
 }

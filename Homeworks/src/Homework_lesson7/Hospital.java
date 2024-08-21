@@ -6,16 +6,14 @@ import java.util.Arrays;
 public class Hospital {
     private Doctor[] doctors;
     private Patient[] patients;
-    private Printer printer;
 
     {
         this.doctors = new Doctor[0];
         this.patients = new Patient[0];
     }
 
-    public Hospital(Printer printer, Doctor... doctors) {
+    public Hospital(Doctor... doctors) {
         this.doctors = doctors;
-        this.printer = printer;
     }
 
     public void hireDoctor(Doctor doctor) {
@@ -34,21 +32,21 @@ public class Hospital {
         Therapist therapist = (Therapist) Helpers.getDoctorByClass(this.doctors, Therapist.class);
 
         if (therapist == null) {
-            this.printer.error("Error Our hospital don't have a therapist");
+            Printer.error("Error Our hospital don't have a therapist");
             return;
         }
 
         for (Patient patient : this.patients) {
 
             if (patient.isHealthy()) {
-                this.printer.info(patient.getName() + " is healthy");
+                Printer.info(patient.getName() + " is healthy");
                 continue;
             }
             therapist.assignPatientToDoctor(patient, this.doctors);
 
             Doctor doctor = patient.getDoctor();
             if (doctor == null) {
-                this.printer.error("the patient " + patient.getName() + " has not been assigned a doctor");
+                Printer.error("the patient " + patient.getName() + " has not been assigned a doctor");
                 continue;
             }
 
