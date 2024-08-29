@@ -64,7 +64,7 @@ public class User implements Cloneable {
         return (User) super.clone();
     }
 
-    public User deepCopy() throws CloneNotSupportedException {
+    public User deepClone() throws CloneNotSupportedException {
         try {
             User userClone = this.clone();
             userClone.setLocation(this.location.clone());

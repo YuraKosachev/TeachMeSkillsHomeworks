@@ -40,7 +40,7 @@ public class UserClone {
         if (user == null)
             return null;
         try {
-            return Copy.Shallow == copy ? user.clone() : user.deepCopy();
+            return Copy.Shallow == copy ? user.clone() : user.deepClone();
         } catch (CloneNotSupportedException ex) {
             return null;
         }
