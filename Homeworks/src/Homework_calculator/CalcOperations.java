@@ -4,10 +4,12 @@ public class CalcOperations {
 
     private final char[] maxPriority;
     private final char[] operations;
+    private final String pattern;
 
     {
         this.operations = new char[]{'-', '+', '/', '*'};
         this.maxPriority = new char[]{'*', '/'};
+        this.pattern = "%.3f";
     }
 
     private String calculate(String v1, String v2, String operator) {
@@ -16,16 +18,16 @@ public class CalcOperations {
 
         switch (operator) {
             case "+" -> {
-                return String.format("%.3f",sum(v1Convert, v2Convert));
+                return String.format(this.pattern,sum(v1Convert, v2Convert));
             }
             case "-" -> {
-                return String.format("%.3f",minus(v1Convert, v2Convert));
+                return String.format(this.pattern,minus(v1Convert, v2Convert));
             }
             case "/" -> {
-                return String.format("%.3f",div(v1Convert, v2Convert));
+                return String.format(this.pattern,div(v1Convert, v2Convert));
             }
             default -> {
-                return String.format("%.3f",multi(v1Convert, v2Convert));
+                return String.format(this.pattern,multi(v1Convert, v2Convert));
             }
         }
     }
