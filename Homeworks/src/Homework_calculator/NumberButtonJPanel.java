@@ -19,6 +19,10 @@ public class NumberButtonJPanel extends JPanel {
 
     private void componentInit() {
         for (int counter = 9; counter >= 0; counter--) {
+            if(counter == 0)
+            {
+                add(new JPanel());
+            }
             JButton btn = new JButton(String.valueOf(counter));
             btn.setFont(new Font("Serif", Font.PLAIN, 15));
             btn.addActionListener(new ActionListener() {
@@ -28,6 +32,11 @@ public class NumberButtonJPanel extends JPanel {
                 }
             });
             add(btn);
+
+            if(counter == 0)
+            {
+                add(new JPanel());
+            }
         }
     }
 }

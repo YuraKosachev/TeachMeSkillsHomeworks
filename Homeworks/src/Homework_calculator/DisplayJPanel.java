@@ -50,11 +50,15 @@ public class DisplayJPanel extends JPanel {
     }
 
     public void removeLast() {
+        if (isResultSet) {
+            resetText();
+        }
+
         if (getText().isEmpty())
             return;
+
         String current = this.getText();
         String val = current.substring(0, current.length() - 1);
         this.textField.setText(val);
-        this.isResultSet = false;
     }
 }
