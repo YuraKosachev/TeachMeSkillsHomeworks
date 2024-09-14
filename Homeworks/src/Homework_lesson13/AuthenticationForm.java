@@ -22,6 +22,7 @@ public class AuthenticationForm extends JFrame implements ActionListener {
         JPanel main = new JPanel(new GridLayout(4,1,0,10));
         main.setBorder(new EmptyBorder(10, 10, 10, 10));
         setSize(new Dimension(300,300));
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout(0,10));
         setResizable(false);
         setVisible(true);
