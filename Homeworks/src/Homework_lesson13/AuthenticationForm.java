@@ -1,6 +1,8 @@
 package Homework_lesson13;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,8 +22,8 @@ public class AuthenticationForm extends JFrame implements ActionListener {
         confirm = new PasswordPanel("Confirm password");
         submit = new JButton("Send");
         submit.addActionListener(this);
-        JPanel main = new JPanel(new GridLayout(4,1,0,5));
-
+        JPanel main = new JPanel(new GridLayout(4,1,0,10));
+        main.setBorder(new EmptyBorder(10, 10, 10, 10));
         setSize(new Dimension(300,300));
         setLayout(new BorderLayout(0,10));
         setResizable(false);
