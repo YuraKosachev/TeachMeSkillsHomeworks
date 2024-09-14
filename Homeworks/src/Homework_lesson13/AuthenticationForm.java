@@ -8,9 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AuthenticationForm extends JFrame implements ActionListener {
-//   // private final JTextField login;
-//    private final JPasswordField password;
-//    private final JPasswordField confirm;
     private final TextPanel login;
     private final PasswordPanel password;
     private final PasswordPanel confirm;
