@@ -9,7 +9,7 @@ public class MaxLenghtWordOperation implements Operation {
         if (text == null || text.trim().isEmpty())
             return null;
 
-        Matcher matcher = Pattern.compile("(?<=\\s|^)[a-zA-Z']*(?=[-.,;:!?]?\\s|$)")
+        Matcher matcher = Pattern.compile("(?<=\\s|^)[a-zA-Z'-]*(?=[.,;:!?]?\\s|$)")
                 .matcher(text.replaceAll("\r\n", ""));
 
         String max = null;
