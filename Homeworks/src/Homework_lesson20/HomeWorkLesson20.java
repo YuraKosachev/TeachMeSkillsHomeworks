@@ -7,10 +7,9 @@ import java.util.function.Consumer;
 public class HomeWorkLesson20 {
     public static void main(String[] args) {
         //Task1
-        //printMaxMin();
+        printMaxMin();
 
         //Task2
-
         printSortedArray();
     }
 
